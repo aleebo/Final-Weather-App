@@ -33,3 +33,26 @@ ul {
 strong {
   font-size: 70px;
 }
+
+.search {
+  margin: 5px 10px;
+}
+
+.float-left {
+  font-size: 75px;
+}
+
+.weather-temperature .units {
+  position: relative;
+  font-size: 16px;
+  top: -34px;
+}
+
+.weather-temperature .active {
+  color: blue;
+  cursor: default;
+}
+
+.weather-temperature .active:hover {
+  text-decoration: none;
+}
