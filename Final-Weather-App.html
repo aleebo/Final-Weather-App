@@ -20,6 +20,69 @@
     <link href="src/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
+         <div class="container">
+      <div class="background">
+        <div class="weather-app-wrapper">
+            <div class="weather-app" id="weather-app">
+            <form class="mb-3" id="search-form">
+           <div class="row">
+            <div class="col-6">
+              <input
+                type="search"
+                placeholder="Search a city.."
+                autofocus="on"
+                autocomplete="off"
+                id="city-input"
+                class="form-control"
+              />
+            </div> 
+            <div class="col-6">
+              <input
+                type="submit"
+                value="Search"
+                class="btn btn-primary w-100" />
+    
+        </div>
+            </div>
+          </div>
+           </form>
+ 
+          <br />
+ 
+<div class="overview">
+    <div class="row">
+        <div class="col-9" id=main>
+    
+          <h1 id="city">Seoul</h1>
+ 
+          <ul>
+  <li> <span id="date"></span></li>
+  <li id="description">Sunny</li>  
+    </ul>
+</div>
+ 
+<div class="row">
+    <div class="col-6"> <div class="float-left">
+        <div class="clearfix weather-temperature">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="Cloudy" id="main-icon" class="float-left" />
+           
+ <strong id="main-temperature">23</strong>
+ <span class="units"><a href="#" id="celsius-link" class="active">°C</a> |<a href="#" id="fahrenheit-link"> °F</a></span> 
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+<ul>
+        <li>Humidity: <span id="humidity">50</span>%</li>
+        <li>Wind: <span id="wind">5</span> km/h</li>
+      
+</ul>
+    </div>
+</div>
+ 
+    <span class="creater"><small> <a href="https://github.com/aleebo/weather-app" target="_blank"> Open-sourced,</a> by Alicia Vuong</small> </span>
+ </div></div></div>
+
     <script src="src/app.js"></script>
   </body>
 </html>
