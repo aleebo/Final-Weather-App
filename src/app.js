@@ -38,8 +38,8 @@ function search(event) {
   document.querySelector("#city").innerHTML = userInput.value;
 }
 
-let form = document.querySelector("#search-form");
-form.addEventListener("submit", handleSubmit);
+//let form = document.querySelector("#search-form");
+//.addEventListener("submit", handleSubmit);
 
 //get forecast
 function displayTemperture(response) {
