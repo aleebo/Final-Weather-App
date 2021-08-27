@@ -31,17 +31,17 @@ function formatDay(timestamp) {
   let days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
   return days[day];
 }
-
-function getForecast(coordinates) {
-  console.log(coordinates);
-  let apiKey = "4a4a95a1db5242c6c908fa1c31b680b9c";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
-  console.log(apiUrl);
-  //let lat = position.coords.latitude;
-  //let lon = position.coords.longitude;
-  axios.get(apiUrl).then(displayForecast);
+//Update city name on search
+function search(event) {
+  event.preventDefault();
+  let userInput = document.querySelector("#search-form");
+  document.querySelector("#city").innerHTML = userInput.value;
 }
 
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
+
+//get forecast
 function displayTemperture(response) {
   let mainTemperture = document.querySelector("#main-temperture");
   let mainCity = document.querySelector("#city");
@@ -49,9 +49,7 @@ function displayTemperture(response) {
   let humidity = document.querySelector("#humidity");
   let wind = document.querySelector("#wind");
   let date = document.querySelector("#date");
-  //double check icon
   let mainIcon = document.querySelector("#main-icon");
-  // let getIcon = response.data.weather[0].icon;
 
   celsiusTemperture = response.data.main.temperture;
 
@@ -64,37 +62,64 @@ function displayTemperture(response) {
     "src",
     `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
-
   mainIcon.setAttribute("alt", response.data.weather[0].description);
   date.innerHTML = formatDate(response.data.dt * 1000);
 
   getForecast(response.data.coord);
 }
-
 function search(city) {
+  let units = "metric";
   let apiKey = "4a4a95a1db5242c6c908fa1c31b680b9c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayTemperture);
 }
-
 function handleSubmit(event) {
   event.preventDefault();
   let cityInput = document.querySelector("#city-input");
   search(cityInput.value);
 }
 
-//function getPosition(position) {
-// let apiKey = "4a4a95a1db5242c6c908fa1c31b680b9c";
-// let lat = position.coords.latitude;
-// let lon = position.coords.longitude;
-// let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-//  axios.get(url).then(displayTemperture); }
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
 
-// function getCurrentLocation() {
-//  navigator.geolocation.getCurrentPosition(getPosition);}
+search("Seoul");
 
-//let locationButton = document.querySelector("#location");
-//locationButton.addEventListener("click", getCurrentLocation);
+function getForecast(coordinates) {
+  let apiKey = "4a4a95a1db5242c6c908fa1c31b680b9c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function getPosition(position) {
+  let apiKey = "4a4a95a1db5242c6c908fa1c31b680b9c";
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+  axios.get(apiUrl).then(showCurrentLocation);
+}
+
+function getCurrentLocation() {
+  navigator.geolocation.getCurrentPosition(getPosition);
+}
+
+function showCurrentLocation(response) {
+  let city = document.querySelector("#city-input");
+  city.innerHTML = response.data.name;
+  let mainTemperature = Math.round(response.data.main.temp);
+  let description = document.querySelector("#description");
+  description.innerHTML = response.data.weather[0].description;
+  let humidity = document.querySelector("#humidity");
+  humidity.innerHTML = response.data.main.humidity;
+  let wind = document.querySelector("#wind");
+  wind.innerHTML = Math.round(response.data.wind.speed);
+  document.getElementById("farenheit-link").disabled = false;
+  document.getElementById("celsius-link").disabled = true;
+  getForecast(response);
+}
+
+let locationButton = document.querySelector("#location");
+locationButton.addEventListener("click", getCurrentLocation);
 
 function displayFahrenheit(event) {
   event.preventDefault();
@@ -105,23 +130,19 @@ function displayFahrenheit(event) {
   mainTemperture.innerHTML = Math.round(fahrenheitTemperature);
 }
 
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheit);
+
 function displayCelsius(event) {
   event.preventDefault();
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
+  let celsiusTemperture = Math.round(((temp - 32) * 5) / 9);
   let mainTemperture = document.querySelector("#main-temperture");
   mainTemperture.innerHTML = Math.round(celsiusTemperture);
 }
 
-let celsiusTemperture = null;
-
-let form = document.querySelector("#search-form");
-form.addEventListener("submit", handleSubmit);
-
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", displayFahrenheit);
-
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsius);
 
-search("Seoul");
+let celsiusTemperture = null;
