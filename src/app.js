@@ -99,27 +99,25 @@ function getPosition(position) {
   axios.get(apiUrl).then(showCurrentLocation);
 }
 
-function getCurrentLocation() {
-  navigator.geolocation.getCurrentPosition(getPosition);
-}
+//function getCurrentLocation() {
+//  navigator.geolocation.getCurrentPosition(getPosition);}
 
-function showCurrentLocation(response) {
-  let city = document.querySelector("#city-input");
-  city.innerHTML = response.data.name;
-  let mainTemperature = Math.round(response.data.main.temp);
-  let description = document.querySelector("#description");
-  description.innerHTML = response.data.weather[0].description;
-  let humidity = document.querySelector("#humidity");
-  humidity.innerHTML = response.data.main.humidity;
-  let wind = document.querySelector("#wind");
-  wind.innerHTML = Math.round(response.data.wind.speed);
-  document.getElementById("farenheit-link").disabled = false;
-  document.getElementById("celsius-link").disabled = true;
-  getForecast(response);
-}
+//function showCurrentLocation(response) {
+//let city = document.querySelector("#city-input");
+//city.innerHTML = response.data.name;
+//let mainTemperature = Math.round(response.data.main.temp);
+//let description = document.querySelector("#description");
+//description.innerHTML = response.data.weather[0].description;
+//let humidity = document.querySelector("#humidity");
+//humidity.innerHTML = response.data.main.humidity;
+//let wind = document.querySelector("#wind");
+//wind.innerHTML = Math.round(response.data.wind.speed);
+//document.getElementById("farenheit-link").disabled = false;
+//document.getElementById("celsius-link").disabled = true;
+//getCurrentLocation(response);}
 
-let locationButton = document.querySelector("#location");
-locationButton.addEventListener("click", getCurrentLocation);
+//let locationButton = document.querySelector("#location");
+//locationButton.addEventListener("click", getCurrentLocation);
 
 function displayFahrenheit(event) {
   event.preventDefault();
